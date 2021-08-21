@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 // const compression = require("compression");
 
-const PORT = 3001;
+const PORT = process.env.MONGODB_URI || 3001;
 
 const app = express();
 
@@ -15,9 +15,11 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/budget", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
   useNewUrlParser: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 // routes
